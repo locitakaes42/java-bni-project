@@ -22,16 +22,23 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    public String register(String username, String password) {
+  public String register(String username, String password, String emailAddress) { // Menambahkan emailAddress
         if (repo.existsByUsername(username)) {
             return "User already exists";
+        }
+        if (repo.existsByEmailAddress(emailAddress)) { // Pengecekan baru untuk email
+            return "Email address already exists";
         }
 
         User user = new User();
         user.setUsername(username);
-        user.setPasswordHash(encoder.encode(password));
-        user.setRole("USER");
+        user.setPassword(encoder.encode(password)); // Mengubah setPasswordHash menjadi setPassword
         user.setCreatedAt(OffsetDateTime.now());
+        user.setEmailAddress(emailAddress); // Menetapkan email address
+        user.setIsActive(true); // Default true berdasarkan skema database
+        user.setUpdatedAt(OffsetDateTime.now()); // Menetapkan waktu update awal
+        // Jika Anda ingin mempertahankan role, Anda perlu menambahkannya kembali ke entitas User dan skema DB
+        // user.setRole("USER"); // Hapus atau tambahkan kembali kolom 'role' jika diperlukan
         repo.save(user);
 
         return "Registered successfully";
@@ -39,8 +46,13 @@ public class AuthService {
 
     public String login(String username, String password) {
         Optional<User> user = repo.findByUsername(username);
-        if (user.isPresent() && encoder.matches(password, user.get().getPasswordHash())) {
-            return jwtUtil.generateToken(username, user.get().getRole());
+        if (user.isPresent() && encoder.matches(password, user.get().getPassword())) { // Mengubah getPasswordHash menjadi getPassword
+            // Jika Anda ingin menggunakan is_active sebagai bagian dari login, tambahkan pengecekan di sini
+            if (!user.get().getIsActive()) {
+                return "User is not active";
+            }
+            // Jika Anda mempertahankan kolom 'role' di entitas User, gunakan user.get().getRole()
+            return jwtUtil.generateToken(username, "USER"); // Perhatikan: 'USER' hardcoded jika role dihapus dari DB
         }
 
         return null;

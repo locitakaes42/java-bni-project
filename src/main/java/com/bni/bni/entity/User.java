@@ -14,24 +14,33 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
-
-    @Column(nullable = false)
-    private String role;
+    @Column(name = "password", nullable = false)
+    private String password;
 
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
+
+    @Column(name = "email_address", nullable = false) // Kolom baru
+    private String emailAddress;
+
+    @Column(name = "is_active", nullable = false) // Kolom baru
+    private Boolean isActive;
+
+    @Column(name = "updated_at", nullable = false) // Kolom baru
+    private OffsetDateTime updatedAt;
+
 
     public User() {
       // default constructor
     }
 
-    public User(String username, String passwordHash, String role, OffsetDateTime createdAt) {
+    public User(String username, String password, String role, OffsetDateTime createdAt, String emailAddress, Boolean isActive, OffsetDateTime updatedAt) {
         this.username = username;
-        this.passwordHash = passwordHash;
-        this.role = role;
+        this.password = password;
         this.createdAt = createdAt;
+        this.emailAddress = emailAddress;
+        this.isActive = isActive;
+        this.updatedAt = updatedAt;
     }
 
     public Long getId() {
@@ -50,20 +59,14 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
+     // Mengubah nama getter/setter dari getPasswordHash menjadi getPassword
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    // Mengubah nama getter/setter dari setPasswordHash menjadi setPassword
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public OffsetDateTime getCreatedAt() {
@@ -72,5 +75,30 @@ public class User {
 
     public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    // Getter dan Setter untuk properti baru
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
