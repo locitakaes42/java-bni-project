@@ -31,7 +31,7 @@ public class AuthController {
             response.put("message", "Username, password, and emailAddress are required.");
             return ResponseEntity.status(400).body(response);
         }
-        String message = authService.register(username, password, emailAddress); // Teruskan emailAddress
+        String message = authService.register(username, password, emailAddress);
 
         Map<String, Object> response = new HashMap<>();
         if (message.equals("Registered successfully")) {
@@ -52,13 +52,13 @@ public class AuthController {
         String token = authService.login(username, password);
 
         Map<String, Object> response = new HashMap<>();
-        if (token != null && !token.equals("User is not active")) { // Menambahkan pengecekan untuk status user
+        if (token != null && !token.equals("User is not active")) { 
             response.put("status", 200);
             response.put("token", token);
             response.put("message", "Login successfully");
             return ResponseEntity.ok(response);
         } else if (token != null && token.equals("User is not active")) {
-            response.put("status", 403); // Forbidden
+            response.put("status", 403); 
             response.put("message", token);
             return ResponseEntity.status(403).body(response);
         }

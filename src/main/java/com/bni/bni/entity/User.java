@@ -20,13 +20,13 @@ public class User {
     @Column(name = "created_at", nullable = false)
     private OffsetDateTime createdAt;
 
-    @Column(name = "email_address", nullable = false) // Kolom baru
+    @Column(name = "email_address", nullable = false) 
     private String emailAddress;
 
-    @Column(name = "is_active", nullable = false) // Kolom baru
+    @Column(name = "is_active", nullable = false) 
     private Boolean isActive;
 
-    @Column(name = "updated_at", nullable = false) // Kolom baru
+    @Column(name = "updated_at", nullable = false) 
     private OffsetDateTime updatedAt;
 
 
@@ -59,12 +59,11 @@ public class User {
         this.username = username;
     }
 
-     // Mengubah nama getter/setter dari getPasswordHash menjadi getPassword
+
     public String getPassword() {
         return password;
     }
 
-    // Mengubah nama getter/setter dari setPasswordHash menjadi setPassword
     public void setPassword(String password) {
         this.password = password;
     }
@@ -77,7 +76,6 @@ public class User {
         this.createdAt = createdAt;
     }
 
-    // Getter dan Setter untuk properti baru
     public String getEmailAddress() {
         return emailAddress;
     }
