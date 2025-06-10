@@ -78,7 +78,7 @@ public class ProfileController {
         }
     }
 
-    @GetMapping("/{profileId}") // Mengubah path variable menjadi profileId
+    @GetMapping("/detail/{profileId}") // Mengubah path variable menjadi profileId
     public ResponseEntity<Map<String, Object>> getProfile(@RequestHeader(value = "Authorization") String authHeader,
                                                           @PathVariable Long profileId) { // Mengubah parameter menjadi profileId
         Map<String, Object> response = new HashMap<>();
