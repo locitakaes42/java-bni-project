@@ -9,7 +9,7 @@ pipeline{
     stages{
         stage('Trigger Build'){
             steps{
-                sh "oc start-build ${BUILD_NAME} --from-dir=. --follow ${PROJECT_NAME}"
+                sh "oc start-build ${BUILD_NAME} --from-dir=. --follow -n ${PROJECT_NAME}"
             }
         }
         stage('Deploy'){
