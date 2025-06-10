@@ -26,7 +26,8 @@ public class ProfileService {
             return "User not found";
         }
 
-        if (profileRepository.existsByUserId(userId)) {
+        // Menggunakan existsByUser_Id
+        if (profileRepository.existsByUser_Id(userId)) {
             return "Profile for this user already exists";
         }
 
@@ -44,14 +45,13 @@ public class ProfileService {
         return "Profile created successfully";
     }
 
-    // Mengubah ini untuk mencari berdasarkan ID 
-    
     public Optional<Profile> getProfileById(Long profileId) {
-        return profileRepository.findById(profileId); // Menggunakan findById bawaan JpaRepository
+        return profileRepository.findById(profileId);
     }
 
     public String updateProfile(Long userId, String firstName, String lastName, String placeOfBirth, LocalDate dateOfBirth) {
-        Optional<Profile> profileOptional = profileRepository.findByUserId(userId);
+        // Menggunakan findByUser_Id
+        Optional<Profile> profileOptional = profileRepository.findByUser_Id(userId);
         if (profileOptional.isEmpty()) {
             return "Profile not found for this user";
         }

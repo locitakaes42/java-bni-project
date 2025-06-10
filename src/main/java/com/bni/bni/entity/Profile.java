@@ -1,10 +1,11 @@
 package com.bni.bni.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate; // Import for date_of_birth
-import java.time.OffsetDateTime; // Import for created_at and updated_at
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty; // Import this
 
 @Entity
 @Table(name = "profiles")
@@ -15,32 +16,31 @@ public class Profile {
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true) // user_id should be unique as per the previous discussion for one-to-one
-    @JsonIgnore //Gonna fix later
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)
+    @JsonIgnore // Pertahankan ini untuk mengabaikan seluruh objek User
     private User user;
 
     @Column(name = "first_name", nullable = false)
-    private String firstName; // Matches first_name in DB
+    private String firstName;
 
     @Column(name = "last_name")
-    private String lastName; // Matches last_name in DB
+    private String lastName;
 
     @Column(name = "place_of_birth")
-    private String placeOfBirth; // Matches place_of_birth in DB
+    private String placeOfBirth;
 
     @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth; // Matches date_of_birth (DATE type) in DB
+    private LocalDate dateOfBirth;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private OffsetDateTime createdAt; // Matches created_at in DB
+    private OffsetDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private OffsetDateTime updatedAt; // Matches updated_at in DB
+    private OffsetDateTime updatedAt;
 
     public Profile() {
     }
 
-    // Constructor adjusted for new fields
     public Profile(User user, String firstName, String lastName, String placeOfBirth, LocalDate dateOfBirth, OffsetDateTime createdAt, OffsetDateTime updatedAt) {
         this.user = user;
         this.firstName = firstName;
@@ -67,6 +67,12 @@ public class Profile {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    // Tambahkan getter baru untuk userId
+    @JsonProperty("userId") // Ini akan membuat properti "userId" di JSON
+    public Long getUserId() {
+        return (this.user != null) ? this.user.getId() : null;
     }
 
     public String getFirstName() {
