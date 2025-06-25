@@ -14,9 +14,9 @@ jobs:
       
     - name: Send Telegram Notification
       run: |
-        curl -X POST "https://api.telegram.org/bot7654399638:AAE6bDNS0Qhp0zk8XADIdb3mfUNuqnObrxY/sendMessage" \
-            -d chat_id=1070862393 \
-            -d text="🚨 Merge to Main/Master Branch 🚨\nA merge has been made to the main/master branch. Please review the changes!"
+        curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="🚨 Merge to Main Branch 🚨\nA merge commit has been made to the main branch. Please review the changes!"
 
     - name: Install OC CLI
       run: |
